@@ -1,41 +1,30 @@
 from django.shortcuts import redirect, render
 from django.core.exceptions import ObjectDoesNotExist
-from event.models import EventGuest,EventUser,User
+from event.models import EventUser,Unit
 def index(request):
-    from .utils import loadUnits
 
-    print(loadUnits())
     return render(request,'main/index.html')
 
 
 
-def loadStaffView(request):
-    from .utils import loadStaff
-    staffs = loadStaff()
-    for staff in staffs:
-        eventD = User(
-            last_name = staff['last_name'],
-            first_name = staff['first_name'],
-            middle_name = staff['middle_name'],
-            iin = 1
-        )
-        eventD.save()
+def loadUnitView(request):
+    from .utils import loadUnits
+    units = loadUnits()
+    for unit in units:
+
+        try:
+            unitM = Unit.objects.get(id_internal=unit['id_internal'])
+        except ObjectDoesNotExist:
+            unitM = Unit(
+                displayname = unit['displayname'],
+                id_internal = unit['id_internal'],
+                id_parent = unit['id_parent'],
+                bin = 1
+            )
+            unitM.save()
 
     return redirect('main')
 
-def loadStaffView(request):
-    from .utils import loadStaff
-    staffs = loadStaff()
-    for staff in staffs:
-        eventD = User(
-            last_name = staff['last_name'],
-            first_name = staff['first_name'],
-            middle_name = staff['middle_name'],
-            iin = 1
-        )
-        eventD.save()
-
-    return redirect('main')
 
 def loadEventsView(request):
     from .utils import loadEvents
@@ -44,20 +33,28 @@ def loadEventsView(request):
         if event['f_fio'] != "":
             try:
                 eventD = EventUser.objects.get(f_unic_id=event['f_unic_id'])
+        
             except ObjectDoesNotExist:
-                eventD = EventUser(
-                    f_name_resource = event['f_name_resource'],
-                    f_name_ev = event['f_name_ev'],
-                    f_name_obj = event['f_name_obj'],
-                    f_name_subdiv = event['f_name_subdiv'],
-                    f_name_appoint = event['f_name_appoint'],
-                    f_fio = event['f_fio'],
-                    f_date_ev = event['f_date_ev'],
-                    f_time_ev = event['f_time_ev'],
-                    f_identifier = event['f_identifier'],
-                    f_unic_id = event['f_unic_id']
-                )
-                eventD.save()
+
+                try:
+                    unit = Unit.objects.get(id_internal=event['f_subdiv_id_internal'])
+                    eventD = EventUser(
+                        f_unic_id = event['f_unic_id'],
+                        f_areas_name = event['f_areas_name'],
+                        f_identifier = event['f_identifier'],
+                        f_name_ev = event['f_name_ev'],
+                        f_name_subdiv = unit.displayname or unit,
+                        f_subdiv_id_internal = unit.id_internal or unit,
+                        f_fio = event['f_fio'],
+                        f_date_ev = event['f_date_ev'],
+                        f_time_ev = event['f_time_ev'],
+                        bin = unit.bin or unit
+                    )
+                    eventD.save()
+                except ObjectDoesNotExist:
+                    
+                    pass
+                
         else:
             pass
     return redirect('main')

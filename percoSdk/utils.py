@@ -3,8 +3,25 @@ from win32com.client.dynamic import Dispatch
 import xml.dom.minidom as minidom
 import xml.etree.ElementTree as ET
 
+import datetime
 
 oPERCo = Dispatch("PERCo_S20_SDK.ExchangeMain")
+
+
+def createEventXml(xmlFileName):
+    dataS = datetime.date.today()
+    requestType = ET.Element('documentrequest')
+
+    beginperiod = f'{dataS.day}.{dataS.month-1}.{dataS.year}'
+    endinperiod = f'{dataS.day}.{dataS.month-1}.{dataS.year}'
+
+    requestType.set('type','regevents')
+    eventsreportSub = ET.SubElement(requestType,'eventsreport')
+    eventsreportSub.set('beginperiod',beginperiod)
+    eventsreportSub.set('endperiod',endinperiod)
+    mydata = ET.tostring(requestType,encoding='unicode')
+    myfile = open(xmlFileName,'w')
+    myfile.write(mydata)
 
 def connectServer():
     Host = "127.0.0.1"
@@ -19,29 +36,33 @@ def loadEvents():
     events = []
     connectServer()
     domEvent = Dispatch('Msxml2.DOMDocument.6.0')
+
+    createEventXml('getEventsMain.xml')
+    
     domEvent.load('getEventsMain.xml')
     oPERCo.GetData(domEvent)
     b = domEvent.save('getEvents.xml')
     root_node = ET.parse('getEvents.xml').getroot()
     for tag in root_node.findall("eventsreport/events/event"): 
-        f_name_resource = tag.get('f_name_resource')
+        f_areas_nameN = tag.get('f_areas_name')
+        if f_areas_nameN == "Неконтролируемая территория":
+            f_areas_name = "Выход"
+        else:
+            f_areas_name = "Вход"
+            
         f_name_ev = tag.get('f_name_ev')
-        f_name_obj = tag.get('f_name_obj')
-        f_name_subdiv = tag.get('f_name_subdiv')
-        f_name_appoint = tag.get('f_name_appoint')
+        f_subdiv_id_internal = tag.get('f_subdiv_id_internal')
         f_fio = tag.get('f_fio')
         f_date_ev = tag.get('f_date_ev')
         f_time_ev = tag.get('f_time_ev')
         f_identifier = tag.get('f_identifier')
-        f_unic_id = f_name_subdiv+f_date_ev+f_time_ev+f_identifier
+        f_unic_id = f_subdiv_id_internal+f_date_ev+f_time_ev+f_identifier
 
         
         event = {
-            'f_name_resource':f_name_resource,
+            'f_areas_name':f_areas_name,
             'f_name_ev':f_name_ev,
-            'f_name_obj':f_name_obj,
-            'f_name_subdiv':f_name_subdiv,
-            'f_name_appoint':f_name_appoint,
+            'f_subdiv_id_internal':f_subdiv_id_internal,
             'f_fio':f_fio,
             'f_time_ev':f_time_ev,
             'f_identifier':f_identifier,
@@ -84,14 +105,16 @@ def loadUnits():
     oPERCo.GetData(dom)
     b = dom.save('loadSubDiv.xml')
     root_node = ET.parse('loadSubDiv.xml').getroot()
-    for tag in root_node.findall("subdiv/subdivnode"): 
+    for tag in root_node.findall("subdiv/subdivnode/subdivnode"): 
         displayname = tag.get("displayname") 
-        staff = {
-            'first_name': first_name,
-            'last_name':last_name,
-            'middle_name':middle_name,
+        id_internal = tag.get('id_internal')
+        id_parent = tag.get('id_parent')
+        unit = {
+            'displayname': displayname,
+            'id_internal':id_internal,
+            'id_parent':id_parent,
         }
-        units.append(staff)
+        units.append(unit)
     
     return units
 
