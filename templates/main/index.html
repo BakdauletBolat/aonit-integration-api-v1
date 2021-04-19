@@ -7,32 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    <div>Hellow wordls</div>
     <div>
-        <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">tabel_id</th>
-                <th scope="col">name</th>
-                <th scope="col">surname</th>
-                <th scope="col">middle_name</th>
-                <th scope="col">data_action</th>
-                <th scope="col">data_begin</th>
-              </tr>
-            </thead>
-            <tbody>
-                {% for staff in staffs %}
-              <tr>
-                <th scope="row">{{staff.tabel_id}}</th>
-                <th scope="row">{{staff.name}}</th>
-                <td>{{staff.surname}}</td>
-                <td>{{staff.middle_name}}</td>
-                <td>{{staff.data_action}}</td>
-                <td>{{staff.data_begin}}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+      
+      
+      <form action="{% url 'loadstaff' %}">
+        <button>Загрузить сотрудник</button>
+      </form>
+     
     </div>
 </body>
 </html>

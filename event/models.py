@@ -1,6 +1,19 @@
 from django.db import models
 
 
+class User(models.Model):
+
+    last_name = models.CharField('Фамилия',max_length=255,null=True,blank=True)
+    first_name = models.CharField('Имя',max_length=255,null=True,blank=True)
+    middle_name = models.CharField('Отчество',max_length=255,null=True,blank=True)
+    iin = models.CharField('ИИН',max_length=255,null=True,blank=True)
+
+class Unit(models.Model):
+
+    name = models.CharField('Имя',max_length=255,null=True,blank=True)
+    bin = models.CharField('БИН',max_length=255,null=True,blank=True)
+
+
 class EventGuest(models.Model):
     f_unic_id = models.CharField('Уникалныйидендификатор',max_length=255,null=True,blank=True)
     f_identifier = models.CharField('идентификатор',max_length=255,null=True,blank=True)
@@ -15,6 +28,7 @@ class EventGuest(models.Model):
     def __str__(self):
 
         return str(self.id)
+
 
 class EventUser(models.Model):
     f_unic_id = models.CharField('Уникалныйидендификатор',max_length=255,null=True,blank=True)

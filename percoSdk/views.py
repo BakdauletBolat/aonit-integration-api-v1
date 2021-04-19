@@ -1,8 +1,44 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.core.exceptions import ObjectDoesNotExist
-from event.models import EventGuest,EventUser
+from event.models import EventGuest,EventUser,User
 def index(request):
-    from .utils import loadStaff,loadEvents
+    from .utils import loadUnits
+
+    print(loadUnits())
+    return render(request,'main/index.html')
+
+
+
+def loadStaffView(request):
+    from .utils import loadStaff
+    staffs = loadStaff()
+    for staff in staffs:
+        eventD = User(
+            last_name = staff['last_name'],
+            first_name = staff['first_name'],
+            middle_name = staff['middle_name'],
+            iin = 1
+        )
+        eventD.save()
+
+    return redirect('main')
+
+def loadStaffView(request):
+    from .utils import loadStaff
+    staffs = loadStaff()
+    for staff in staffs:
+        eventD = User(
+            last_name = staff['last_name'],
+            first_name = staff['first_name'],
+            middle_name = staff['middle_name'],
+            iin = 1
+        )
+        eventD.save()
+
+    return redirect('main')
+
+def loadEventsView(request):
+    from .utils import loadEvents
     events = loadEvents()
     for event in events:
         if event['f_fio'] != "":
@@ -24,5 +60,4 @@ def index(request):
                 eventD.save()
         else:
             pass
-    return render(request,'main/index.html')
-
+    return redirect('main')

@@ -63,22 +63,36 @@ def loadStaff():
     b = dom.save('getstaff.xml')
     root_node = ET.parse('getstaff.xml').getroot()
     for tag in root_node.findall("staff/staffnode"): 
-        name = tag.get("first_name") 
-        surname = tag.get('last_name')
+        first_name = tag.get("first_name") 
+        last_name = tag.get('last_name')
         middle_name = tag.get('middle_name')
-        data_action = tag.get('data_action')
-        data_begin = tag.get('data_begin')
-        tabel_id = tag.get('tabel_id')
         staff = {
-            'name': name,
-            'surname':surname,
+            'first_name': first_name,
+            'last_name':last_name,
             'middle_name':middle_name,
-            'data_action':data_action,
-            'data_begin':data_begin,
-            'tabel_id':tabel_id
         }
         staffs.append(staff)
     
     return staffs
+
+def loadUnits():
+    units = []
+    connectServer()
+    doc = minidom.Document()
+    dom = Dispatch('Msxml2.DOMDocument.6.0')
+    dom.load('getSubDiv.xml')
+    oPERCo.GetData(dom)
+    b = dom.save('loadSubDiv.xml')
+    root_node = ET.parse('loadSubDiv.xml').getroot()
+    for tag in root_node.findall("subdiv/subdivnode"): 
+        displayname = tag.get("displayname") 
+        staff = {
+            'first_name': first_name,
+            'last_name':last_name,
+            'middle_name':middle_name,
+        }
+        units.append(staff)
+    
+    return units
 
 
