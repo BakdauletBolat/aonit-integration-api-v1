@@ -1,35 +1,14 @@
-from django.shortcuts import redirect, render
+from celery import shared_task
+from .models import EventUser,Unit
 from django.core.exceptions import ObjectDoesNotExist
-from event.models import EventUser,Unit
+import string,random
 
+@shared_task
+def getEventForDay():
+    from percoSdk.utils import loadEvents
 
-def index(request):
-
-    return render(request,'main/index.html')
-
-
-def loadUnitView(request):
-    from .utils import loadUnits
-    units = loadUnits()
-    for unit in units:
-
-        try:
-            unitM = Unit.objects.get(id_internal=unit['id_internal'])
-        except ObjectDoesNotExist:
-            unitM = Unit(
-                displayname = unit['displayname'],
-                id_internal = unit['id_internal'],
-                id_parent = unit['id_parent'],
-                bin = 1
-            )
-            unitM.save()
-
-    return redirect('main')
-
-
-def loadEventsView(request):
-    from .utils import loadEvents
     events = loadEvents()
+    
     for event in events:
         if event['f_fio'] != "":
             try:
@@ -58,4 +37,6 @@ def loadEventsView(request):
                 
         else:
             pass
-    return redirect('main')
+
+
+

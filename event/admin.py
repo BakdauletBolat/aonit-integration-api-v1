@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import EventUser,Unit
+from .models import EventUser, TestDB,Unit
 # Register your models here.
 
 
@@ -18,3 +18,4 @@ class UnitAdmin(admin.ModelAdmin):
     list_display = ('id_internal','id_parent','displayname','bin')
 
 admin.site.register(Unit,UnitAdmin)
+admin.site.register(TestDB)

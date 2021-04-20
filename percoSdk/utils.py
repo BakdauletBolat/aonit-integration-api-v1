@@ -12,13 +12,18 @@ def createEventXml(xmlFileName):
     dataS = datetime.date.today()
     requestType = ET.Element('documentrequest')
 
-    beginperiod = f'{dataS.day}.{dataS.month-1}.{dataS.year}'
-    endinperiod = f'{dataS.day}.{dataS.month-1}.{dataS.year}'
+    beginperiod = f'{dataS.day-10}.{dataS.month-1}.{dataS.year}'
+    endinperiod = f'{dataS.day-10}.{dataS.month-1}.{dataS.year}'
+
+    beginperiodtime = '00:00:00'
+    endperiodtime = '23:50:00'
 
     requestType.set('type','regevents')
     eventsreportSub = ET.SubElement(requestType,'eventsreport')
     eventsreportSub.set('beginperiod',beginperiod)
     eventsreportSub.set('endperiod',endinperiod)
+    eventsreportSub.set('beginperiodtime',beginperiodtime)
+    eventsreportSub.set('endperiodtime',endperiodtime)
     mydata = ET.tostring(requestType,encoding='unicode')
     myfile = open(xmlFileName,'w')
     myfile.write(mydata)

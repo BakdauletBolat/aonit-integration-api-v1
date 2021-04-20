@@ -44,3 +44,7 @@ class EventUser(models.Model):
     def __str__(self):
 
         return str(self.f_fio)
+
+class TestDB(models.Model):
+
+    name = models.CharField(max_length=255)
