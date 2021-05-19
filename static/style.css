@@ -1,0 +1,35 @@
+#header {
+    background: white;
+    box-shadow: 4px 0px 12px rgba(0,0,0,0.2);
+    color:black;
+}
+#header a:link, #header a:visited {
+    color: black;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    padding: 15px;
+    border-radius: 5px;
+    background: #206A8D;
+}
+
+#content-related {
+    border-radius: 5px;
+}
+
+#changelist .actions .button {
+    font-size: 13px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: #206A8D;
+    box-shadow: 0 -15px 20px -10px rgb(0 0 0 / 15%) inset;
+    cursor: pointer;
+    height: 24px;
+    line-height: 1;
+    padding: 4px 8px;
+    color: white;
+}
+
+div.breadcrumbs{
+background: #206A8D;
+}
