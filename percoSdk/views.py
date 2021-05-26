@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.core.exceptions import ObjectDoesNotExist
-from event.models import EventUser,Unit
+from event.models import EventUser, Unit
 
 
 def index(request):

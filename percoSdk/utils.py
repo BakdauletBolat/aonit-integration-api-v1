@@ -74,7 +74,8 @@ def loadEvents():
             'f_date_ev':f_date_ev,
             'f_unic_id':f_unic_id
         }
-        events.append(event)
+        if f_name_ev == 'Проход':
+            events.append(event)
     
     return events
 

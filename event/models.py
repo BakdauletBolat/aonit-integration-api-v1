@@ -12,6 +12,12 @@ class Unit(models.Model):
 
         return f'Имя: {self.displayname},  Id: {self.id_internal}, Бинн: {self.bin} Parent_id: {self.id_parent}'
 
+    class Meta:
+
+        verbose_name = 'Подразделение'
+        verbose_name_plural = 'Подразделений'
+        ordering = ['displayname']
+
 
 class EventGuest(models.Model):
     f_unic_id = models.CharField('Уникалныйидендификатор',max_length=255,null=True,blank=True)
@@ -29,6 +35,8 @@ class EventGuest(models.Model):
         return str(self.id)
 
 
+
+
 class EventUser(models.Model):
     f_unic_id = models.CharField('Уникальный идендификатор',max_length=255,null=True,blank=True)
     f_areas_name = models.CharField('Вход/Выход',max_length=255,null=True,blank=True)
@@ -44,6 +52,11 @@ class EventUser(models.Model):
     def __str__(self):
 
         return str(self.f_fio)
+
+    class Meta:
+        verbose_name = 'Событие'
+        verbose_name_plural = 'Событий'
+        ordering = ['f_name_ev']
 
 class TestDB(models.Model):
 
