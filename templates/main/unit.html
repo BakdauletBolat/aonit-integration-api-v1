@@ -27,12 +27,19 @@
   </div>
       </div>
       <div class="bg-light border rounded-3">
+          <div class="d-flex row ">
+              <div class="col-8">
+                  <h2 style="padding:10px 20px">Подразделений</h2>
+              </div>
+              <div style="justify-content: flex-end;
+    display: flex;" class="col-4">
+                  <button class="btn btn-primary">Обновить</button>
+              </div>
+          </div>
         <ul class="list-group">
-          <li class="list-group-item">An item</li>
-          <li class="list-group-item">A second item</li>
-          <li class="list-group-item">A third item</li>
-          <li class="list-group-item">A fourth item</li>
-          <li class="list-group-item">And a fifth one</li>
+            {% for unit in units %}
+          <li class="list-group-item">{{unit.displayname}}</li>
+            {% endfor %}
         </ul>
       </div>
     </div>
