@@ -48,6 +48,7 @@ class EventUser(models.Model):
     f_date_ev = models.CharField('Дата',null=True,blank=True,max_length=255)
     f_time_ev = models.CharField('Время',null=True,blank=True,max_length=255)
     bin = models.CharField('Бин',null=True,blank=True,max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
 

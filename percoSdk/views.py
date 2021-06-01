@@ -58,4 +58,4 @@ def loadEventsView(request):
                 
         else:
             pass
-    return redirect('main')
+    return redirect('home')

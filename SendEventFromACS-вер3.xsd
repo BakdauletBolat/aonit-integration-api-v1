@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by SHOCK (SHOCK) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="Request" type="Data"/>
+	<xs:complexType name="Data">
+		<xs:annotation>
+			<xs:documentation>Краткий запрос ЛД</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="iin" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ИИН персоны. Между ИИН и RFID есть условная обязательность. Обязательно должно быть заполнено один из двух.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="code" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код персоны (как правило это заводской номер пейджа или карточки турникета)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RFID" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>RFID метка</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eventCode" type="xs:long">
+				<xs:annotation>
+					<xs:documentation>Вход (1) или Выход (0)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="time" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Дата и время события</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BIN" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>БИНы госорганов, расположеные в здании</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="gateNumber" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер входа (турникета)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="floorNumber" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер этажа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="buildingName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование здания</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Organizations">
+		<xs:sequence>
+			<xs:element name="buildingCode" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

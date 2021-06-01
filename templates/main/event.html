@@ -27,6 +27,16 @@
   </div>
       </div>
       <div class="bg-light border rounded-3">
+        <div class="d-flex row ">
+          <div class="col-8">
+              <h2 style="padding:10px 20px">Событие</h2>
+          </div>
+          <div style="justify-content: flex-end;
+display: flex;" class="col-4">
+              <a href="{% url 'loadevents' %}" class="btn btn-primary">Обновить</a>
+              <a href="{% url 'todayView' %}" class="btn btn-primary">Сегодняшний</a>
+          </div>
+      </div>
         <ul class="list-group">
             {% for event in events %}
           <li class="list-group-item">{{event.f_unic_id}}</li>

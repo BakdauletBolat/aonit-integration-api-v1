@@ -12,8 +12,8 @@ def createEventXml(xmlFileName):
     dataS = datetime.date.today()
     requestType = ET.Element('documentrequest')
 
-    beginperiod = f'{dataS.day-10}.{dataS.month-1}.{dataS.year}'
-    endinperiod = f'{dataS.day-10}.{dataS.month-1}.{dataS.year}'
+    beginperiod = f'{dataS.day}.{dataS.month}.{dataS.year}'
+    endinperiod = f'{dataS.day}.{dataS.month}.{dataS.year}'
 
     beginperiodtime = '00:00:00'
     endperiodtime = '23:50:00'
@@ -29,10 +29,10 @@ def createEventXml(xmlFileName):
     myfile.write(mydata)
 
 def connectServer():
-    Host = "127.0.0.1"
+    Host = "10.1.80.200"
     Port = "211"
-    Login = "Admin"
-    Pass = "123456qA"
+    Login = "ADMIN"
+    Pass = ""
     iRet = oPERCo.SetConnect(Host, Port, Login, Pass)
 
     return iRet
@@ -51,9 +51,9 @@ def loadEvents():
     for tag in root_node.findall("eventsreport/events/event"): 
         f_areas_nameN = tag.get('f_areas_name')
         if f_areas_nameN == "Неконтролируемая территория":
-            f_areas_name = "Выход"
+            f_areas_name = "0"
         else:
-            f_areas_name = "Вход"
+            f_areas_name = "1"
             
         f_name_ev = tag.get('f_name_ev')
         f_subdiv_id_internal = tag.get('f_subdiv_id_internal')
@@ -123,5 +123,9 @@ def loadUnits():
         units.append(unit)
     
     return units
+
+
+
+
 
 

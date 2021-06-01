@@ -14,20 +14,12 @@ app.autodiscover_tasks()
 
 
 app.conf.beat_schedule = {
-    'test in 8 12':{
-        'task': 'event.tasks.test812',
-        'schedule':crontab(hour=20,minute=22)
+    'load and save events':{
+        'task': 'event.tasks.loadUnitsandSave',
+        'schedule':crontab(hour=23,minute=00)
     },
-    'test in 8 15':{
-        'task': 'event.tasks.test815',
-        'schedule':crontab(hour=20,minute=23)
-    },
-    'test in 8 18':{
-        'task': 'event.tasks.test818',
-        'schedule':crontab(hour=20,minute=24)
-    },
-    'test in 8 20':{
-        'task': 'event.tasks.test820',
-        'schedule':crontab(hour=20,minute=25)
-    }
+    'send req to Aonit':{
+        'task': 'event.tasks.sendRequestToAonit',
+        'schedule':crontab(hour=23,minute=50)
+    } 
 }

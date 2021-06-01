@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by SHOCK (SHOCK) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="Request">
+		<xs:annotation>
+			<xs:documentation>Запрос для получения данных из ИИС Е-Кызмет</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="param" type="param" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Зависит от контекста сервиса. К примеру сервис getPerson: передаем - key - ИИН, type - string, value - 720124485129</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="serviceName" use="required">
+				<xs:annotation>
+					<xs:documentation>Наименование сервиса</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Response">
+		<xs:annotation>
+			<xs:documentation>Ответный запрос с данными из ИИС Е-Кызмет</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="data" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Здесь формируются любые данные из ИИС Е-Кызмет. Это может быть личные данные госслужащего, данные штатного расписания гос.органа, данные о конкурсе т.д. Однако все эти данные должны строго соответствовать своей XSD, которая не содержится в настоящем XSD.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="msgCode" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Код сообщения</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="msgText" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Текст сообщения</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="param">
+		<xs:annotation>
+			<xs:documentation>Параметр</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="key" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Ключ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="type" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Тип</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="values" type="values" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Значение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="values">
+		<xs:sequence>
+			<xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
