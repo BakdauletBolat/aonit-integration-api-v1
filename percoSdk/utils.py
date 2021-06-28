@@ -1,11 +1,11 @@
 
-from win32com.client.dynamic import Dispatch
+# from win32com.client.dynamic import Dispatch
 import xml.dom.minidom as minidom
 import xml.etree.ElementTree as ET
-
+#
 import datetime
-
-oPERCo = Dispatch("PERCo_S20_SDK.ExchangeMain")
+#
+# oPERCo = Dispatch("PERCo_S20_SDK.ExchangeMain")
 
 
 def createEventXml(xmlFileName):
@@ -39,14 +39,14 @@ def connectServer():
 
 def loadEvents():
     events = []
-    connectServer()
-    domEvent = Dispatch('Msxml2.DOMDocument.6.0')
-
-    createEventXml('getEventsMain.xml')
-    
-    domEvent.load('getEventsMain.xml')
-    oPERCo.GetData(domEvent)
-    b = domEvent.save('getEvents.xml')
+    # connectServer()
+    # domEvent = Dispatch('Msxml2.DOMDocument.6.0')
+    #
+    # createEventXml('getEventsMain.xml')
+    #
+    # domEvent.load('getEventsMain.xml')
+    # oPERCo.GetData(domEvent)
+    # b = domEvent.save('getEvents.xml')
     root_node = ET.parse('getEvents.xml').getroot()
     for tag in root_node.findall("eventsreport/events/event"): 
         f_areas_nameN = tag.get('f_areas_name')
@@ -80,49 +80,34 @@ def loadEvents():
     return events
 
 
-def loadStaff():
-    staffs = []
-    connectServer()
-    doc = minidom.Document()
-    dom = Dispatch('Msxml2.DOMDocument.6.0')
-    dom.load('main.xml')
-    oPERCo.GetData(dom)
-    b = dom.save('getstaff.xml')
-    root_node = ET.parse('getstaff.xml').getroot()
-    for tag in root_node.findall("staff/staffnode"): 
-        first_name = tag.get("first_name") 
-        last_name = tag.get('last_name')
-        middle_name = tag.get('middle_name')
-        staff = {
-            'first_name': first_name,
-            'last_name':last_name,
-            'middle_name':middle_name,
-        }
-        staffs.append(staff)
-    
-    return staffs
+def loadTest():
+    events = []
+    root_node = ET.parse('getEvents.xml').getroot()
+    for tag in root_node.findall("eventsreport/events/event"):
+        f_areas_nameN = tag.get('f_areas_name')
+        if f_areas_nameN == "Неконтролируемая территория":
+            f_areas_name = "0"
+        else:
+            f_areas_name = "1"
 
-def loadUnits():
-    units = []
-    connectServer()
-    doc = minidom.Document()
-    dom = Dispatch('Msxml2.DOMDocument.6.0')
-    dom.load('getSubDiv.xml')
-    oPERCo.GetData(dom)
-    b = dom.save('loadSubDiv.xml')
-    root_node = ET.parse('loadSubDiv.xml').getroot()
-    for tag in root_node.findall("subdiv/subdivnode/subdivnode"): 
-        displayname = tag.get("displayname") 
-        id_internal = tag.get('id_internal')
-        id_parent = tag.get('id_parent')
-        unit = {
-            'displayname': displayname,
-            'id_internal':id_internal,
-            'id_parent':id_parent,
+        f_name_ev = tag.get('f_name_ev')
+        f_fio = tag.get('f_fio')
+        f_date_ev = tag.get('f_date_ev')
+        f_time_ev = tag.get('f_time_ev')
+        f_identifier = tag.get('f_identifier')
+
+        event = {
+            'f_areas_name': f_areas_name,
+            'f_name_ev': f_name_ev,
+            'f_fio': f_fio,
+            'f_time_ev': f_time_ev,
+            'f_identifier': f_identifier,
+            'f_date_ev': f_date_ev,
         }
-        units.append(unit)
-    
-    return units
+        if f_name_ev == 'Проход':
+            events.append(event)
+
+    return events
 
 
 
