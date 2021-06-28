@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.core.exceptions import ObjectDoesNotExist
 from event.models import EventUser, Unit
 from itertools import islice
-
+from datetime import datetime
 def index(request):
 
     return render(request,'main/index.html')
@@ -28,10 +28,10 @@ def loadUnitView(request):
 
 def loadTestEventsView(request):
     from .utils import loadTest
+    eventsCache = EventUser.objects.filter(created_at__date=datetime.today()).delete()
     events = loadTest()
     batch_size = len(events)
     objs = (EventUser(
-        f_unic_id=events[i]['f_unic_id'],
         f_areas_name=events[i]['f_areas_name'],
         f_identifier=events[i]['f_identifier'],
         f_name_ev=events[i]['f_name_ev'],

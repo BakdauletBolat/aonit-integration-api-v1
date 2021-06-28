@@ -6,8 +6,7 @@ from .models import EventUser, TestDB,Unit
 
 
 class EventUserAdmin(admin.ModelAdmin):
-    list_filter = ('f_name_subdiv',)
-    list_display = ('f_identifier','f_name_subdiv','f_fio','f_date_ev','f_time_ev','bin')
+    list_display = ('f_identifier','f_fio','f_date_ev','f_time_ev')
 
 
 
