@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.core.exceptions import ObjectDoesNotExist
-from event.models import EventUser, Unit
+from event.models import EventUser
 from datetime import date
 
 
@@ -14,12 +14,6 @@ def eventView(request):
     }
     return render(request, 'main/event.html', data)
 
-def unitView(request):
-    units = Unit.objects.all()
-    data = {
-        'units':units
-    }
-    return render(request, 'main/unit.html', data)
 
 
 

@@ -29,10 +29,10 @@ def createEventXml(xmlFileName):
     myfile.write(mydata)
 
 def connectServer():
-    Host = "10.1.80.200"
+    Host = "127.0.0.1"
     Port = "211"
     Login = "ADMIN"
-    Pass = ""
+    Pass = "123456qA"
     iRet = oPERCo.SetConnect(Host, Port, Login, Pass)
 
     return iRet

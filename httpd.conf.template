@@ -1,0 +1,32 @@
+ServerName 127.0.0.1:80
+LoadFile "c:/users/admin/appdata/local/programs/python/python38-32/python38.dll"
+LoadModule wsgi_module "c:/users/admin/appdata/local/programs/python/python38-32/lib/site-packages/mod_wsgi/server/mod_wsgi.cp38-win32.pyd"
+WSGIPythonHome "c:/users/admin/appdata/local/programs/python/python38-32"
+
+Alias /static "d:/percoSdk/static"
+
+Alias /media "d:/percoSdk/media"
+
+<Directory "d:/percoSdk/static">
+    # for Apache 2.4
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+</Directory>
+
+<Directory "d:/percoSdk/media">
+    # for Apache 2.4
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+</Directory>
+
+
+WSGIScriptAlias / "d:/percoSdk/percoSdk/wsgi.py"
+WSGIPythonPath "d:/percoSdk/"
+
+<Directory "d:/percoSdk/percoSdk/">
+<Files wsgi.py>
+    Require all granted
+</Files>   
+</Directory>

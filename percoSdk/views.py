@@ -1,30 +1,12 @@
 from django.shortcuts import redirect, render
 from django.core.exceptions import ObjectDoesNotExist
-from event.models import EventUser, Unit
+from event.models import EventUser
 from itertools import islice
 from datetime import datetime
 def index(request):
 
     return render(request,'main/index.html')
 
-
-def loadUnitView(request):
-    from .utils import loadUnits
-    units = loadUnits()
-    for unit in units:
-
-        try:
-            unitM = Unit.objects.get(id_internal=unit['id_internal'])
-        except ObjectDoesNotExist:
-            unitM = Unit(
-                displayname = unit['displayname'],
-                id_internal = unit['id_internal'],
-                id_parent = unit['id_parent'],
-                bin = 1
-            )
-            unitM.save()
-
-    return redirect('main')
 
 def loadTestEventsView(request):
     from .utils import loadTest

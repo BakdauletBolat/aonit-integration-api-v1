@@ -3,13 +3,12 @@ from django.urls import path,include
 from django.shortcuts import redirect
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import index,loadUnitView,loadEventsView,loadTestEventsView
+from .views import index,loadEventsView,loadTestEventsView
 from event.models import EventUser
 
 
 urlpatterns = [
     # path('',index,name="main"),
-    path('loadunit/', loadUnitView, name="loadunit"),
     path('loadevents/', loadEventsView, name="loadevents"),
     path('loadtestevents/', loadTestEventsView, name="loadTestEvents"),
     path('admin/', admin.site.urls),

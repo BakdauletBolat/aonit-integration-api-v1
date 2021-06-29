@@ -17,9 +17,7 @@
         </a>
       </li>
       <li>
-        <a href="{% url 'units' %}" class="nav-link link-dark">
-          Подразделение
-        </a>
+      
       </li>
 
     </ul>
@@ -33,9 +31,9 @@
           </div>
           <div style="justify-content: flex-end;
 display: flex;" class="col-4">
-              <a href="{% url 'loadevents' %}" class="btn btn-primary">Обновить</a>
-              <a href="{% url 'todayView' %}" class="btn btn-primary">Сегодняшний</a>
-              <a href="{% url 'loadTestEvents' %}" class="btn btn-primary">Test</a>
+              <a href="{% url 'loadevents' %}" class="btn btn-primary">Старый</a>
+        
+              <a href="{% url 'loadTestEvents' %}" class="btn btn-primary">Новый</a>
           </div>
       </div>
         <ul class="list-group">
